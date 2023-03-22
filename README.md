@@ -29,4 +29,4 @@ The following is an example JSON configuration setup.
 
 ### TODO
 
-[ ]  Generate string entries based on output from a strings tool such as floss or the one in PEStudio
+* [ ]  Generate string entries based on output from a strings tool such as floss or the one in PEStudio
