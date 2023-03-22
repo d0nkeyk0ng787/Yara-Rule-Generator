@@ -1,0 +1,11 @@
+{
+    "rulename" : "PLACEHOLDER",
+    "author": "PLACEHOLDER",
+    "description": "PLACEHOLDER",
+    "strings": [
+        {"name": "PLACEHOLDER", "value": "PLACEHOLDER", "modifiers": "PLACEHOLDER"},
+        {"name": "PLACEHOLDER", "value": "PLACEHOLDER", "modifiers": "PLACEHOLDER"},
+        {"name": "PLACEHOLDER", "value": "PLACEHOLDER", "modifiers": "PLACEHOLDER"}
+    ],
+    "condition": "PLACEHOLDER"
+}
