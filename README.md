@@ -26,3 +26,7 @@ The following is an example JSON configuration setup.
     "condition": "all of them"
 }
 ```
+
+### TODO
+
+[ ]  Generate string entries based on output from a strings tool such as floss or the one in PEStudio
