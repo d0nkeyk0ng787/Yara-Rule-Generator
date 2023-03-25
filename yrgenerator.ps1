@@ -3,13 +3,13 @@
     Yara Rule Generator v0.1 - Config Based Yara Rule Builder
 
 .DESCRIPTION
-    Yara-Rule-Generator uses a json configuration file to create a yara rule for a suspicious binary
+    Yara-Rule-Generator uses a JSON configuration file and the output from floss to write YARA rules.
 
 .EXAMPLE
-    PS> .\yrgenerator.ps1 -BinaryPath C:\Binaries\mal.exe -OutputFile C:\YaraRules\malrule.yara
+    PS> .\yrgenerator.ps1 -BinaryPath C:\Binaries\mal.exe -OutputFile C:\YaraRules\malrule.yara -FlossOutput C:\FLoss\Flossoutput.txt
 
 .NOTES
-    The configuration file has placeholder information but will need to be filled out as you require. An example config is provided.
+    You will need to install and run floss, save the output and feed it into the script. The configuration file has placeholder information but also will also need to be filled out.
 
 .LINK
     https://github.com/d0nkeyk0ng787/Yara-Rule-Generator
@@ -17,9 +17,12 @@
 
 # Define mandatory parameters
 param(
-    [Parameter(Mandatory = $false)] $BinaryPath,
-    [Parameter(Mandatory = $false)] $OutputFile
+    [Parameter(Mandatory = $true)] $BinaryPath,
+    [Parameter(Mandatory = $true)] $OutputFile,
+    [Parameter(Mandatory = $true)] $FlossOutput
 )
+
+. .\getstrings.ps1
 
 # Read in the config file
 $configFile = Get-Content -Path ".\yrgconfig.json" -Raw
@@ -47,10 +50,12 @@ rule $($config.rulename)
 
 "@
 
-foreach($string in $config.strings){
-    $yaraRule += "        `$$($string.name) = `"$($string.value)`""
-    if($string.modifiers){
-        $yaraRule += " $($string.modifiers)"
+$strings = Get-Strings -InputFile $FlossOutput
+
+foreach($key in $strings.Keys){
+    $yaraRule += "        `$$($key) = `"$($strings[$key])`""
+    if($key -like "*url*"){
+        $yaraRule += " wide"
     }
     $yaraRule += "`n"
 }
